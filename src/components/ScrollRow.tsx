@@ -1,49 +1,51 @@
-import React from 'react'
-import Items from './Items'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import Items from './Items';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 interface Products {
-    id: number;
-    title: string;
-    price: number;
+  id: number;
+  title: string;
+  price: number;
 }
 
 interface ScrollRowProp {
-    data?: Products[];
+  data?: Products[];
+  Imgpath: string;
 }
 
-const ScrollRow: React.FC<ScrollRowProp> = ({ data }) => {
+const ScrollRow: React.FC<ScrollRowProp> = ({ data, Imgpath }) => {
+  return (
+    <>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.scrollContainer}
+      >
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
+        <Items Imgpath={Imgpath} />
 
-    return (
-        <>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                <Items/>
-                {/* {data && data?.length && data?.map((item) => (
+        {/* {data && data?.length && data?.map((item) => (
                     // <Items />
                     <Text style={{ color: "red" }} key={item.id} >
                         {item.title} - ${item.price}
                     </Text>
                 ))} */}
-            </ScrollView>
-        </>
-    )
-}
+      </ScrollView>
+    </>
+  );
+};
 
-export default ScrollRow
+export default ScrollRow;
 const styles = StyleSheet.create({
-    scrollContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 10,
-    }
-
+  scrollContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+  },
 });

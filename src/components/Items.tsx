@@ -1,34 +1,33 @@
+import React, { useEffect } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import axios from 'axios'
-const Items = () => {
-  const navigation = useNavigation();
+interface ItemsProp {
+  Imgpath?: string;
+}
+
+const Items: React.FC<ItemsProp> = ({ Imgpath }) => {
+  const navigation = useNavigation<any>();
+  console.log('imgggg', Imgpath);
+
+
   return (
     <TouchableOpacity
       style={styles.main}
-      onPress={() => navigation.navigate('ProductDetail' as never)}
+      onPress={() => navigation.navigate('detail')}
     >
       <Image
-        source={require('../assets/bg2.jpeg')}
+        source={require('../../assets/bg1.jpeg')}
         style={styles.productImage}
       />
       <TouchableOpacity style={styles.heartContainer}>
-        <MaterialIcons name='favorite' size={15} color="white" />
+        {/* <MaterialIcons name='favorite' size={15} color="white" /> */}
       </TouchableOpacity>
       <View style={styles.info}>
-        <Text style={styles.title}>
-          cappuccino
-        </Text>
-        <Text style={styles.des}>
-          des.........
-        </Text>
+        <Text style={styles.title}>cappuccino</Text>
+        <Text style={styles.des}>des.........</Text>
         <View style={styles.cartInfo}>
           <Text style={styles.dollar}>
-            $ <Text style={styles.price}>
-              4.20
-            </Text>
+            $ <Text style={styles.price}>4.20</Text>
           </Text>
           <TouchableOpacity style={styles.cartButton}>
             <Text>+</Text>
@@ -36,15 +35,15 @@ const Items = () => {
         </View>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default Items
+export default Items;
 
 const styles = StyleSheet.create({
   main: {
     marginTop: 10,
-    backgroundColor: "#1e232a",
+    backgroundColor: '#1e232a',
     color: 'white',
     height: 200,
     width: 140,
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     padding: 9,
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: "center",
+    alignItems: 'center',
   },
   textStyle: {
     color: 'white',
@@ -72,11 +71,11 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   cartInfo: {
-    width: "100%",
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: "space-between",
-    flexDirection: "row"
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   dollar: {
     color: '#D17842',
@@ -84,8 +83,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: "center",
-    height: 20
+    alignItems: 'center',
+    height: 20,
   },
   price: {
     fontSize: 13,
@@ -100,19 +99,19 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   productImage: {
-    width: "100%",
+    width: '100%',
     height: 120,
     borderRadius: 15,
   },
   heartContainer: {
     height: 25,
     width: 25,
-    backgroundColor: "#0C0F14",
+    backgroundColor: '#0C0F14',
     position: 'absolute',
     top: 15,
     right: 15,
     borderRadius: 7,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-}) 
+});
