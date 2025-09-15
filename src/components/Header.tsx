@@ -1,9 +1,10 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Searchbar from './Searchbar';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+import DrawerNavigation from '../navigation/DrawerNavigation';
 interface HeaderProps {
   showSearchbar?: boolean;
   showScreenName?: boolean;
@@ -20,22 +21,33 @@ const Header: React.FC<HeaderProps> = ({
   const route = useRoute();
   console.log(route, 'route');
 
+  console.log('====================================');
+  console.log('navigation', navigation);
+  console.log('====================================');
   return (
     <View style={styles.main}>
       <View style={styles.inner}>
         <TouchableOpacity
-          disabled={route.name === 'home'}
+          // disabled={route.name === 'home'}
           style={styles.menuButton}
-          onPress={() => navigation.goBack()}
-        ></TouchableOpacity>
+          onPress={() => {
+            route.name === 'home'
+              ? navigation.openDrawer()
+              : navigation.goBack();
+          }}
+        >
+          {route.name === 'home' ? (
+            <AntDesign name="menu-fold" size={20} color="gray" />
+          ) : (
+            <AntDesign name="left" size={20} color="gray" />
+          )}
+        </TouchableOpacity>
         {showScreenName && <Text style={styles.screenName}>{screenName}</Text>}
-        {/* <View style={styles.profile}> */}
         <Image
           style={styles.profile}
           source={require('../../assets/dp.jpg')}
           alt="dp"
         />
-        {/* </View> */}
       </View>
       {showSearchbar && (
         <>
@@ -53,6 +65,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   main: {
+    paddingTop: 20,
     display: 'flex',
     flexDirection: 'column',
   },

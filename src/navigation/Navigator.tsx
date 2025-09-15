@@ -5,6 +5,7 @@ import CartScreen from '../screens/CartScreen';
 import FavScreen from '../screens/FavScreen';
 import ProductDetail from '../screens/ProductDetail';
 import { BottomTabs } from './BottomNavigator';
+import DrawerNavigation from './DrawerNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export const MyStack = () => {
       initialRouteName="tabs"
       screenOptions={{ headerShown: false }}
     >
+      <Stack.Screen name="drawer" component={DrawerNavigation} />
       <Stack.Screen name="tabs" component={BottomTabs} />
       <Stack.Screen name="home" component={LandingPage} />
       <Stack.Screen name="cart" component={CartScreen} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RadialGradient } from 'react-native-gradients';
+import { useSelector } from 'react-redux';
 const CartItemCard = () => {
   const colorList = [
     { offset: '0%', color: '#231557', opacity: '1' },
@@ -9,6 +10,7 @@ const CartItemCard = () => {
     { offset: '100%', color: '#FFF800', opacity: '1' },
   ];
 
+  // const count = useSelector((state: RootState) => state.counter.value);
   return (
     // <RadialGradient x="50%" y="50%" rx="50%" ry="50%" colorList={colorList}>
     <View style={styles.main}>

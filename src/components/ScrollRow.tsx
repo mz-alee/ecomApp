@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Items from './Items';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useQuery } from 'react-query';
+import { ProductData } from '../api/baseApi';
 
 interface Products {
   id: number;
@@ -10,10 +12,26 @@ interface Products {
 
 interface ScrollRowProp {
   data?: Products[];
-  Imgpath: string;
+  catgory: string;
+  isSuccess: any;
 }
 
-const ScrollRow: React.FC<ScrollRowProp> = ({ data, Imgpath }) => {
+const ScrollRow: React.FC<ScrollRowProp> = ({ data, isSuccess }) => {
+  useEffect(() => {
+    if (isSuccess) {
+      const filteredData = data?.data?.products?.filter(
+        item => item.category === 'beauty',
+      );
+      console.log('====================================');
+      console.log('filtered', filteredData);
+      console.log('====================================');
+    } else {
+      console.log('====================================');
+      console.log('products fetching failed');
+      console.log('====================================');
+    }
+  }, []);
+
   return (
     <>
       <ScrollView
@@ -21,21 +39,9 @@ const ScrollRow: React.FC<ScrollRowProp> = ({ data, Imgpath }) => {
         showsHorizontalScrollIndicator={false}
         style={styles.scrollContainer}
       >
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-        <Items Imgpath={Imgpath} />
-
-        {/* {data && data?.length && data?.map((item) => (
-                    // <Items />
-                    <Text style={{ color: "red" }} key={item.id} >
-                        {item.title} - ${item.price}
-                    </Text>
-                ))} */}
+        {data?.data?.products?.map((item: Products) => (
+          <Items key={item.id} data={item} />
+        ))}
       </ScrollView>
     </>
   );

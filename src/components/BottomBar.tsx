@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const CustomTabBar: React.FC<BottomTabBarProps> = ({
   state,
@@ -40,8 +40,8 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
               : 'home'
             : route.name === 'cart'
             ? isFocused
-              ? 'cart-shopping'
-              : 'cart-shopping'
+              ? 'shoppingcart'
+              : 'shoppingcart'
             : 'heart';
 
         return (
@@ -50,7 +50,7 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
             onPress={onPress}
             style={[styles.tab, isFocused && styles.activeTab]}
           >
-            <Icon
+            <AntDesign
               name={iconName as any}
               size={22}
               color={isFocused ? '#D17842' : '#AEAEAE'}
@@ -72,13 +72,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 65,
     backgroundColor: '#0c0f14',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: -2 },
     shadowRadius: 5,
-    elevation: 10, // Android shadow
+    elevation: 10,
   },
   tab: {
     flex: 1,

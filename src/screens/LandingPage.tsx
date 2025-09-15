@@ -10,33 +10,48 @@ import {
 import Filters from '../components/Filters';
 import ScrollRow from '../components/ScrollRow';
 import Header from '../components/Header';
+import { ProductData } from '../api/baseApi';
+import { useQuery } from 'react-query';
+import SmoothBurstLoader from '../components/Loader';
 // import ScrollRow from '../components/ScrollRow';
 // import { useQuery } from '@tanstack/react-query';
 // import { ProductData } from '../api/axios';
 
-export default function StartupScreen() {
-  //   const { data, isLoading, isSuccess } = useQuery({
-  //     queryKey: ['products'],
-  //     queryFn: ProductData,
+export default function LandingPage() {
+  const { data, isLoading, isSuccess } = useQuery({
+    queryKey: ['products'],
+    queryFn: ProductData,
+  });
 
-  //   })
-
-  //   console.log("product  data ////////////", data)
-  console.log('testing');
-  console.log('testing');
-
+  console.log('====================================');
+  console.log(data?.data?.products);
+  console.log('====================================');
   return (
     <View style={styles.background}>
       <Header showSearchbar={true} />
-      <Filters />
-      <ScrollView style={styles.productContainer}>
-        <Text style={styles.rowHeader}>Coffee</Text>
-        <ScrollRow Imgpath="../../assets/bg1.jpeg" />
-        <Text style={styles.rowHeader}>beans</Text>
-        <ScrollRow Imgpath="../../assets/beans.jpeg" />
-        <Text style={styles.rowHeader}>Tea</Text>
-        <ScrollRow Imgpath="../../assets/beans.jpeg" />
-      </ScrollView>
+      {isLoading ? (
+        <View style={styles.loadingcontainer}>
+          <SmoothBurstLoader />
+        </View>
+      ) : (
+        <>
+          <Filters />
+          <ScrollView style={styles.productContainer}>
+            <Text style={styles.rowHeader}>Beauty</Text>
+            <ScrollRow isSuccess={isSuccess} data={data} category="beauty" />
+            <Text style={styles.rowHeader}>fragrances</Text>
+            <ScrollRow
+              isSuccess={isSuccess}
+              data={data}
+              category="fragrances"
+            />
+            <Text style={styles.rowHeader}>furniture</Text>
+            <ScrollRow isSuccess={isSuccess} data={data} category="furniture" />
+            <Text style={styles.rowHeader}>groceries</Text>
+            <ScrollRow isSuccess={isSuccess} data={data} category="groceries" />
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 }
@@ -45,7 +60,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#0C0F14',
-    paddingTop: 20,
     alignItems: 'center',
   },
   overlay: {
@@ -76,5 +90,17 @@ const styles = StyleSheet.create({
   productContainer: {
     width: '85%',
     paddingVertical: 5,
+  },
+  loadingText: {
+    color: 'white',
+    fontStyle: 'italic',
+    fontSize: 14,
+    // position: 'absolute',
+    textAlign: 'center',
+  },
+  loadingcontainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
