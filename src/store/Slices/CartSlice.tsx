@@ -1,35 +1,64 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import Toast from 'react-native-toast-message';
 
-export interface CounterState {
-  value: number;
+export interface CartItem {
+  id: number;
+  title: string;
+  // rating: number;
+  price: number;
+  // Image: string;
+  quantity: number;
 }
 
-const initialState: CounterState = {
-  value: 0,
+export interface CartState {
+  items: CartItem[];
+}
+
+const initialState: CartState = {
+  items: [],
 };
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const CartSlice = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
-    increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    addItem: (state, action: PayloadAction<CartItem>) => {
+      const existing = state.items.find(item => item.id === action.payload.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
     },
-    decrement: state => {
-      state.value -= 1;
+    removeItem: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter(item => item.id !== action.payload);
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    increaseQty: (state, action: PayloadAction<number>) => {
+      console.log('====================================');
+      console.log('action', action);
+      console.log('====================================');
+      const existing = state.items.find(item => item.id === action.payload);
+      if (existing) {
+        existing.quantity += 1;
+      }
+    },
+    decreaseQty: (state, action: PayloadAction<number>) => {
+      const existing = state.items.find(item => item.id === action.payload);
+      if (existing && existing.quantity > 1) {
+        existing.quantity -= 1;
+      } else {
+        state.items = state.items.filter(item => item.id !== action.payload);
+        Toast.show({
+          type: 'success',
+          text2: 'Product Removed From Cart👋',
+        });
+      }
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { addItem, removeItem, increaseQty, decreaseQty } =
+  CartSlice.actions;
 
-export default counterSlice.reducer;
+export default CartSlice.reducer;

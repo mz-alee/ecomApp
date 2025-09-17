@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -9,26 +9,56 @@ import {
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/Header';
+import { useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../store/Slices/FavSlice';
+import Toast from 'react-native-toast-message';
 
 const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState(250);
-
+  const [product, setProduct] = useState<any>(null);
   const sizes = [250, 500, 1000];
+
+  const dispatch = useDispatch();
+
+  const route = useRoute();
+
+  useEffect(() => {
+    setProduct(route?.params?.ProductData);
+  }, []);
+  console.log('====================================');
+  console.log(product);
+  console.log('====================================');
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text2: 'Product added into Fav',
+    });
+  };
 
   return (
     <View style={styles.main}>
       <ImageBackground
-        source={require('../../assets/bg1.jpeg')}
+        source={{ uri: product?.images[0] }}
         style={styles.topContainer}
       >
         <Header />
+        <TouchableOpacity
+          onPress={() => {
+            showToast();
+            dispatch(addItem(product));
+          }}
+          style={styles.favContainer}
+        >
+          <Icon name="heart" size={20} color="white" />
+        </TouchableOpacity>
         <View style={styles.bottomBox}>
           <View style={styles.leftSide}>
-            <Text style={styles.coffeName}>Coffe Name</Text>
+            <Text style={styles.ProductName}>{product?.title}</Text>
             <Text style={styles.location}>from africa</Text>
             <View style={styles.ratingContainer}>
               <Icon name="star" size={20} color="#D17842" />
-              <Text style={styles.ratingText}>4.5</Text>
+              <Text style={styles.ratingText}>{product?.rating}</Text>
               <Text style={styles.ratingTotal}>(6,444)</Text>
             </View>
           </View>
@@ -43,12 +73,7 @@ const ProductDetail = () => {
       <View style={styles.bottomContainer}>
         <Text style={styles.DescriptionTitle}>Description</Text>
         <View style={styles.DescriptionBox}>
-          <Text style={styles.DescriptionText}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
-            dolorem neque, facere possimus placeat iure, voluptates optio nihil
-            cumque commodi nemo? Nam hic magnam tenetur reiciendis repudiandae
-            laudantium atque perferendis.
-          </Text>
+          <Text style={styles.DescriptionText}>{product?.description}</Text>
         </View>
         <Text style={styles.sizeText}>Size</Text>
         <View style={styles.sizeContainer}>
@@ -75,15 +100,18 @@ const ProductDetail = () => {
         <View style={styles.cartContainer}>
           <View style={styles.priceContainer}>
             <Text style={styles.sizeText}>price</Text>
-            <Text style={styles.coffeName}>
+            <Text style={styles.ProductName}>
               <Icon name="dollar" size={20} color="#D17842" />
-              10.5
+              {product?.price}
             </Text>
           </View>
-          <TouchableOpacity style={styles.cartBtn}>
+          {/* <TouchableOpacity style={styles.cartBtn}>
             <Text style={{ color: 'white', fontWeight: '700' }}>
               Add to cart
             </Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity style={styles.cartBtn}>
+            <Text style={{ color: 'white', fontWeight: '400' }}>Purchase</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -94,7 +122,7 @@ const ProductDetail = () => {
 export default ProductDetail;
 
 const styles = StyleSheet.create({
-  main: { flex: 1 },
+  main: { flex: 1, position: 'relative' },
   topContainer: { flex: 0.6 },
   bottomBox: {
     height: 120,
@@ -115,7 +143,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
   },
-  coffeName: { fontSize: 20, fontWeight: '700', color: 'white' },
+  ProductName: { fontSize: 20, fontWeight: '700', color: 'white' },
   location: { color: '#AEAEAE', fontSize: 10, textTransform: 'capitalize' },
   ratingContainer: {
     height: 20,
@@ -128,6 +156,16 @@ const styles = StyleSheet.create({
   ratingText: { fontSize: 14, fontWeight: '900', color: 'white' },
   ratingTotal: { color: '#AEAEAE', fontSize: 9 },
   btnContainer: {
+    backgroundColor: '#141921',
+    padding: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+  },
+  favContainer: {
+    position: 'absolute',
+    right: 30,
+    top: 100,
     backgroundColor: '#141921',
     padding: 10,
     width: 40,
@@ -147,14 +185,14 @@ const styles = StyleSheet.create({
   DescriptionText: {
     color: '#AEAEAE',
     fontSize: 12,
-    fontWeight: '300',
+    fontWeight: '400',
     marginHorizontal: 15,
     marginBottom: 10,
   },
   sizeText: {
     color: '#AEAEAE',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '500',
     marginHorizontal: 15,
     marginBottom: 3,
   },

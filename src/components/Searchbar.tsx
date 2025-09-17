@@ -17,7 +17,6 @@ const Searchbar: React.FC<InputProp> = ({ value, setValue, type }) => {
         style={styles.searchField}
         placeholder="Find Your Coffee..."
       />
-      
     </View>
   );
 };

@@ -2,12 +2,16 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/Store';
 
 const CustomTabBar: React.FC<BottomTabBarProps> = ({
   state,
   descriptors,
   navigation,
 }) => {
+  const cartItem = useSelector((state: RootState) => state?.cart?.items);
+
   return (
     <View style={styles.container}>
       {state.routes.map((route, index) => {

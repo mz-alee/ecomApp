@@ -15,11 +15,10 @@ export const MyStack = () => {
       initialRouteName="tabs"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="drawer" component={DrawerNavigation} />
       <Stack.Screen name="tabs" component={BottomTabs} />
       <Stack.Screen name="home" component={LandingPage} />
-      <Stack.Screen name="cart" component={CartScreen} />
-      <Stack.Screen name="fav" component={FavScreen} />
+      {/* <Stack.Screen name="cart" component={CartScreen} /> */}
+      {/* <Stack.Screen name="fav" component={FavScreen} /> */}
       <Stack.Screen name="detail" component={ProductDetail} />
     </Stack.Navigator>
   );

@@ -8,6 +8,8 @@ import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 import { Provider } from 'react-redux';
 import { store } from './src/store/Store';
 import 'react-native-url-polyfill/auto';
+import Toast from 'react-native-toast-message';
+
 const App = () => {
   console.log('testing');
 
@@ -22,6 +24,7 @@ const App = () => {
           </NavigationContainer>
         </Provider>
       </QueryClientProvider>
+      <Toast />
     </>
   );
 };
