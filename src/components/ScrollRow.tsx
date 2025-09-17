@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Items from './Items';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useQuery } from 'react-query';
@@ -12,19 +12,18 @@ interface Products {
 
 interface ScrollRowProp {
   data?: Products[];
-  catgory: string;
-  isSuccess: any;
+  category?: string;
+  isSuccess?: boolean;
 }
 
-const ScrollRow: React.FC<ScrollRowProp> = ({ data, isSuccess }) => {
+const ScrollRow: React.FC<ScrollRowProp> = ({ data, isSuccess, category }) => {
+  const [filtersdata, setData] = useState([]);
   useEffect(() => {
     if (isSuccess) {
       const filteredData = data?.data?.products?.filter(
-        item => item.category === 'beauty',
+        item => item.category === category,
       );
-      console.log('====================================');
-      console.log('filtered', filteredData);
-      console.log('====================================');
+      setData(filteredData);
     } else {
       console.log('====================================');
       console.log('products fetching failed');
@@ -39,7 +38,7 @@ const ScrollRow: React.FC<ScrollRowProp> = ({ data, isSuccess }) => {
         showsHorizontalScrollIndicator={false}
         style={styles.scrollContainer}
       >
-        {data?.data?.products?.map((item: Products) => (
+        {filtersdata?.map((item: Products) => (
           <Items key={item.id} data={item} />
         ))}
       </ScrollView>

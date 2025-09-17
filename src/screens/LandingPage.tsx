@@ -1,21 +1,11 @@
 import React from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import Filters from '../components/Filters';
 import ScrollRow from '../components/ScrollRow';
 import Header from '../components/Header';
 import { ProductData } from '../api/baseApi';
 import { useQuery } from 'react-query';
 import SmoothBurstLoader from '../components/Loader';
-// import ScrollRow from '../components/ScrollRow';
-// import { useQuery } from '@tanstack/react-query';
-// import { ProductData } from '../api/axios';
 
 export default function LandingPage() {
   const { data, isLoading, isSuccess } = useQuery({

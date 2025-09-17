@@ -1,8 +1,15 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RadialGradient } from 'react-native-gradients';
-import { useSelector } from 'react-redux';
-const CartItemCard = () => {
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/Store';
+import { decreaseQty, increaseQty } from '../store/Slices/CartSlice';
+
+interface CartItemCartProp {
+  item?: [];
+}
+
+const CartItemCard = ({ item }) => {
   const colorList = [
     { offset: '0%', color: '#231557', opacity: '1' },
     { offset: '29%', color: '#44107A', opacity: '1' },
@@ -10,18 +17,28 @@ const CartItemCard = () => {
     { offset: '100%', color: '#FFF800', opacity: '1' },
   ];
 
-  // const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
+
+  console.log('====================================');
+  console.log('itemsssss ', item);
+  console.log('====================================');
   return (
     // <RadialGradient x="50%" y="50%" rx="50%" ry="50%" colorList={colorList}>
     <View style={styles.main}>
       <View style={styles.productContainer}>
         <Image
-          source={require('../../assets/bg2.jpeg')}
+          source={{ uri: item?.images[0] }}
           style={{ height: 120, width: 120, borderRadius: 20 }}
         />
         <View style={styles.info}>
           <View>
-            <Text style={styles.productName}>cappuccino</Text>
+            <Text
+              style={styles.productName}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {item?.title}
+            </Text>
             <Text style={styles.des}>with steamed milk</Text>
           </View>
           <View style={styles.secondRow}>
@@ -29,17 +46,23 @@ const CartItemCard = () => {
               <Text style={styles.sizeText}>M</Text>
             </View>
             <Text style={styles.dollar}>
-              $ <Text style={styles.price}>4.20</Text>
+              $ <Text style={styles.price}>{item?.price}</Text>
             </Text>
           </View>
           <View style={styles.thirdRow}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => dispatch(decreaseQty(item.id))}
+              style={styles.btn}
+            >
               <Text style={styles.btn}>-</Text>
             </TouchableOpacity>
             <View style={styles.totalNumBox}>
-              <Text style={styles.totalNumText}>1</Text>
+              <Text style={styles.totalNumText}>{item?.quantity}</Text>
             </View>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => dispatch(increaseQty(item.id))}
+              style={styles.btn}
+            >
               <Text style={styles.btn}>+</Text>
             </TouchableOpacity>
           </View>
@@ -54,6 +77,7 @@ export default CartItemCard;
 
 const styles = StyleSheet.create({
   main: {
+    // width:350,
     height: 155,
     margin: 10,
     borderRadius: 20,
@@ -76,8 +100,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   productName: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 15,
+    fontWeight: '500',
     textTransform: 'capitalize',
     color: 'white',
   },

@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../store/Slices/CartSlice';
+import { RootState } from '../store/Store';
+import Toast from 'react-native-toast-message';
 
 interface ItemsProp {
   Imgpath?: string;
@@ -11,37 +15,57 @@ interface ItemsProp {
 const Items: React.FC<ItemsProp> = ({ Imgpath, data }) => {
   const navigation = useNavigation<any>();
 
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state: RootState) => state?.cart?.items);
+  console.log('====================================');
+  console.log('cart itemssss', cartItem);
+  console.log('====================================');
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      // text1: 'Hello',
+      text2: 'Product added in Cart👋',
+    });
+  };
   return (
-    <TouchableOpacity
-      style={styles.main}
-      onPress={() => navigation.navigate('detail')}
-    >
-      <Image
-        // source={require('../../assets/bg1.jpeg')}
-        source={{ uri: data?.images?.[0] }}
-        style={styles.productImage}
-      />
-      <View style={styles.ratingContainer}>
-        <AntDesign name="star" size={12} color="#D17842" />
-        <Text style={styles.ratingText}>{data?.rating}</Text>
-      </View>
-      <View style={styles.info}>
-        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-          {data?.title}
-        </Text>
-        <Text style={styles.des} numberOfLines={1} ellipsizeMode="tail">
-          {data?.description}
-        </Text>
-        <View style={styles.cartInfo}>
-          <Text style={styles.dollar}>
-            $ <Text style={styles.price}>{data?.price}</Text>
-          </Text>
-          <TouchableOpacity style={styles.cartButton}>
-            <Text>+</Text>
-          </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        style={styles.main}
+        onPress={() => navigation.navigate('detail', { ProductData: data })}
+      >
+        <Image
+          // source={require('../../assets/bg1.jpeg')}
+          source={{ uri: data?.images?.[0] }}
+          style={styles.productImage}
+        />
+        <View style={styles.ratingContainer}>
+          <AntDesign name="star" size={12} color="#D17842" />
+          <Text style={styles.ratingText}>{data?.rating}</Text>
         </View>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.info}>
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+            {data?.title}
+          </Text>
+          <Text style={styles.des} numberOfLines={1} ellipsizeMode="tail">
+            {data?.description}
+          </Text>
+          <View style={styles.cartInfo}>
+            <Text style={styles.dollar}>
+              $ <Text style={styles.price}>{data?.price}</Text>
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(addItem(data));
+                showToast();
+              }}
+              style={styles.cartButton}
+            >
+              <Text>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </>
   );
 };
 

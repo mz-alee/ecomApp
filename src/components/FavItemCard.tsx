@@ -7,21 +7,30 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-const FavItemCard = () => {
+
+interface favProp {
+  productData?: any;
+}
+
+const FavItemCard: React.FC<favProp> = ({ productData }) => {
+  console.log('====================================');
+  console.log(productData);
+  console.log('====================================');
+
   const sizes = [250, 500, 1000];
 
   return (
     <View style={styles.main}>
       <ImageBackground
-        source={require('../../assets/bg1.jpeg')}
+        source={{ uri: productData?.images[0] }}
         style={styles.topContainer}
       >
         <View style={styles.heartContainer}>
-          <Icon name="favorite" size={20} color="white" />
+          <Icon name="heart" size={20} color="red" />
         </View>
         <View style={styles.bottomBox}>
           <View style={styles.leftSide}>
-            <Text style={styles.coffeName}>Coffe Name</Text>
+            <Text style={styles.coffeName}>{productData?.title}</Text>
             <Text style={styles.location}>from africa</Text>
             <View style={styles.ratingContainer}>
               <Icon name="star" size={20} color="#D17842" />
@@ -45,12 +54,7 @@ const FavItemCard = () => {
       <View style={styles.bottomContainer}>
         <Text style={styles.DescriptionTitle}>Description</Text>
         <View style={styles.DescriptionBox}>
-          <Text style={styles.DescriptionText}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
-            dolorem neque, facere possimus placeat iure, voluptates optio nihil
-            cumque commodi nemo? Nam hic magnam tenetur reiciendis repudiandae
-            laudantium atque perferendis.
-          </Text>
+          <Text style={styles.DescriptionText}>{productData?.description}</Text>
         </View>
       </View>
       {/* </LinearGradient> */}
@@ -67,6 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: 'relative',
     overflow: 'hidden',
+    backgroundColor: '#252a3253',
   },
   topContainer: {
     height: 300,
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
   bottomBox: {
     height: 120,
     width: '100%',
-    backgroundColor: '#05050584',
+    backgroundColor: '#eceaea16',
     borderTopStartRadius: 25,
     borderTopEndRadius: 25,
     bottom: 0,
@@ -115,6 +120,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     // flex: 0.4,
     height: 170,
+    // backgroundColor: '#252A32',
   },
   DescriptionTitle: {
     color: '#AEAEAE',
@@ -129,14 +135,15 @@ const styles = StyleSheet.create({
   DescriptionText: {
     color: '#AEAEAE',
     fontSize: 12,
-    fontWeight: '300',
+    fontWeight: '400',
     marginHorizontal: 15,
     marginBottom: 10,
   },
   heartContainer: {
-    height: 30,
-    width: 30,
-    backgroundColor: '#0C0F14',
+    height: 32,
+    padding: 2,
+    width: 32,
+    backgroundColor: '#141921',
     position: 'absolute',
     top: 20,
     right: 15,
