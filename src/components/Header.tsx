@@ -1,10 +1,12 @@
-import React from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Searchbar from './Searchbar';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import DrawerNavigation from '../navigation/DrawerNavigation';
+import { supabase } from '../lib/supabase';
+import { Form } from 'react-hook-form';
 interface HeaderProps {
   showSearchbar?: boolean;
   showScreenName?: boolean;
@@ -17,13 +19,8 @@ const Header: React.FC<HeaderProps> = ({
   screenName,
 }) => {
   const navigation = useNavigation();
-
   const route = useRoute();
-  console.log(route, 'route');
 
-  console.log('====================================');
-  console.log('navigation', navigation);
-  console.log('====================================');
   return (
     <View style={styles.main}>
       <View style={styles.inner}>

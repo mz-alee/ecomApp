@@ -1,7 +1,14 @@
 import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-const Searchbar = () => {
+
+interface InputProp {
+  value?: string;
+  setValue?: any;
+  type?: any;
+}
+
+const Searchbar: React.FC<InputProp> = ({ value, setValue, type }) => {
   return (
     <View style={styles.searchContainer}>
       <Icon name="search" size={20} color="gray" style={styles.icon} />
@@ -10,6 +17,7 @@ const Searchbar = () => {
         style={styles.searchField}
         placeholder="Find Your Coffee..."
       />
+      
     </View>
   );
 };

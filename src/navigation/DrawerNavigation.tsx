@@ -22,7 +22,6 @@ const DrawerNavigation = () => {
         },
       }}
     >
-      {/* <Drawer.Screen name="hometabs" component={BottomTabs} /> */}
       <Drawer.Screen name="home" component={BottomTabs} />
       <Drawer.Screen name="fav" component={FavScreen} />
       <Drawer.Screen name="setting" component={Setting} />

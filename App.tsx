@@ -7,7 +7,7 @@ import DrawerNavigation from './src/navigation/DrawerNavigation';
 import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 import { Provider } from 'react-redux';
 import { store } from './src/store/Store';
-
+import 'react-native-url-polyfill/auto';
 const App = () => {
   console.log('testing');
 
