@@ -3,6 +3,6 @@
   "compilerOptions": {
     "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "react-native.config.js", "react-native.config.js"],
   "exclude": ["**/node_modules", "**/Pods"]
 }

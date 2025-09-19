@@ -1,38 +1,92 @@
+import React, { useEffect, useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { MyStack } from './Navigator';
 import { BottomTabs } from './BottomNavigator';
 import ProductDetail from '../screens/ProductDetail';
 import FavScreen from '../screens/FavScreen';
 import Setting from '../screens/Setting';
 import Profile from '../screens/Profile';
-import { MyStack } from './Navigator';
+import AuthScreen from '../authScreens/AuthScreen';
+import SideDrawer from '../components/SideDrawer';
+import Cart from '../screens/CartScreen';
 
 const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
-
-// function HomeStack() {
-//   return (
-//     <Stack.Navigator screenOptions={{ headerShown: false }}>
-//       <Stack.Screen name="tabs" component={BottomTabs} />
-//       <Stack.Screen name="detail" component={ProductDetail} />
-//     </Stack.Navigator>
-//   );
-// }
 
 export default function DrawerNavigation() {
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<string>('');
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('userToken');
+        setToken(storedToken);
+      } catch (e) {
+        console.log('Error reading token:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkToken();
+  }, []);
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#0C0F14',
+        }}
+      >
+        <ActivityIndicator size="large" color="#D17842" />
+        <Text
+          style={{
+            marginTop: 30,
+            color: '#D17842',
+            fontSize: 35,
+            fontFamily: 'StoryScript-Regular',
+          }}
+        >
+          mzius store
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
         drawerActiveTintColor: '#D17842',
         drawerInactiveTintColor: '#AEAEAE',
-        drawerStyle: { backgroundColor: '#0C0F14' },
+        drawerStyle: styles.main,
       }}
+      drawerContent={props => <SideDrawer {...props} />}
     >
-      <Drawer.Screen name="home" component={MyStack} />
-      <Drawer.Screen name="fav" component={FavScreen} />
-      <Drawer.Screen name="setting" component={Setting} />
-      <Drawer.Screen name="profile" component={Profile} />
+      {token ? (
+        <>
+          <Drawer.Screen name="home" component={MyStack} />
+          <Drawer.Screen name="fav" component={FavScreen} />
+          <Drawer.Screen name="cart" component={Cart} />
+          <Drawer.Screen name="setting" component={Setting} />
+          <Drawer.Screen name="profile" component={Profile} />
+        </>
+      ) : (
+        <Drawer.Screen name="auth" component={AuthScreen} />
+      )}
     </Drawer.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  main: {
+    width: 250,
+    padding: 10,
+    backgroundColor: 'transparent',
+  },
+});

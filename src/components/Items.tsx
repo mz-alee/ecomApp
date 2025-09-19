@@ -96,10 +96,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     color: 'white',
+    fontFamily: 'Okra-Medium',
   },
   des: {
     fontSize: 11,
     color: 'white',
+    fontFamily: 'Okra-Medium',
   },
   cartInfo: {
     marginTop: 5,
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 13,
     color: 'white',
+    fontFamily: 'Okra-Medium',
   },
   cartButton: {
     backgroundColor: '#d17842',

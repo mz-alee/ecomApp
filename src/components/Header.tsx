@@ -51,7 +51,9 @@ const Header: React.FC<HeaderProps> = ({
       </View>
       {showSearchbar && (
         <>
-          <Text style={styles.title}>Find the best coffee for you</Text>
+          {/* <Text style={styles.title}>Find the best coffee for you</Text> */}
+          <Text style={styles.title}>Find What You Love, <Text style={{fontSize:35, }}>Ali</Text> </Text>
+          {/* <Text style={styles.title}>find your </Text> */}
           <View style={styles.searchContainer}>
             <Searchbar />
           </View>
@@ -70,11 +72,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 27,
+    // fontWeight: 'bold',
+    fontFamily: 'Exo2-Italic',
     color: 'white',
     textAlign: 'left',
     marginLeft: 30,
+    // fontStyle: 'italic',
     marginTop: 10,
     width: 230,
   },
@@ -117,8 +121,8 @@ const styles = StyleSheet.create({
   },
   screenName: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
+    fontFamily:"Exo2-Italic",
+    fontSize: 20,
     alignSelf: 'center',
     width: 100,
     textAlign: 'center',

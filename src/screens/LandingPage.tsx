@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import { ProductData } from '../api/baseApi';
 import { useQuery } from 'react-query';
 import SmoothBurstLoader from '../components/Loader';
+import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LandingPage() {
   const { data, isLoading, isSuccess } = useQuery({
@@ -13,9 +15,7 @@ export default function LandingPage() {
     queryFn: ProductData,
   });
 
-  console.log('====================================');
-  console.log(data?.data?.products);
-  console.log('====================================');
+
   return (
     <View style={styles.background}>
       <Header showSearchbar={true} />

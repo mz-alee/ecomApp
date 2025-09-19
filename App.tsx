@@ -30,3 +30,7 @@ const App = () => {
 };
 
 export default App;
+
+
+
+// i want to install backend with node js express for my native app so tell me the best structure controller routes everything first we will create sign up and login api so first we will install project setup with data base and each file should be separate  for datebase setup etc and also tell me about atlus how setup in my linux mongo compass installed but atlus not so lets start step by step

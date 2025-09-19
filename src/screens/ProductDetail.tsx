@@ -111,7 +111,14 @@ const ProductDetail = () => {
             </Text>
           </TouchableOpacity> */}
           <TouchableOpacity style={styles.cartBtn}>
-            <Text style={{ color: 'white', fontWeight: '400' }}>Purchase</Text>
+            <Text
+              style={{
+                color: 'white',
+                fontFamily: 'Exo2-Bold',
+              }}
+            >
+              Purchase
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -143,12 +150,16 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
   },
-  ProductName: { fontSize: 20, fontWeight: '700', color: 'white' },
+  ProductName: {
+    fontSize: 19,
+    color: 'white',
+    fontFamily: 'Exo2-Italic',
+  },
   location: { color: '#AEAEAE', fontSize: 10, textTransform: 'capitalize' },
   ratingContainer: {
     height: 20,
     width: 100,
-    marginTop: 23,
+    marginTop: 16,
     flexDirection: 'row',
     gap: 4,
     alignItems: 'center',
@@ -175,24 +186,25 @@ const styles = StyleSheet.create({
   bottomContainer: { flex: 0.4, backgroundColor: '#0c0f14' },
   DescriptionTitle: {
     color: '#AEAEAE',
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 17,
     margin: 15,
+    fontFamily: 'Exo2-Bold',
   },
   DescriptionBox: {
     height: 100,
   },
   DescriptionText: {
     color: '#AEAEAE',
-    fontSize: 12,
-    fontWeight: '400',
+    fontSize: 13,
+    fontFamily: 'Exo2-Italic',
     marginHorizontal: 15,
     marginBottom: 10,
   },
   sizeText: {
     color: '#AEAEAE',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '500',
+    fontFamily: 'Exo2-Italic',
     marginHorizontal: 15,
     marginBottom: 3,
   },
@@ -229,7 +241,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 32,
     // paddingHorizontal:20,
-    marginTop: 5,
+    marginTop: 15,
   },
   priceContainer: {
     display: 'flex',

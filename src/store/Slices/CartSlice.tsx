@@ -5,19 +5,22 @@ import Toast from 'react-native-toast-message';
 export interface CartItem {
   id: number;
   title: string;
-  // rating: number;
   price: number;
-  // Image: string;
   quantity: number;
 }
 
 export interface CartState {
   items: CartItem[];
+  totalPrice: number;
 }
 
 const initialState: CartState = {
   items: [],
+  totalPrice: 0,
 };
+
+const total = (items: CartItem[]) =>
+  items.reduce((total, item) => total + item.price * item.quantity, 0);
 
 export const CartSlice = createSlice({
   name: 'cart',
@@ -30,18 +33,18 @@ export const CartSlice = createSlice({
       } else {
         state.items.push({ ...action.payload, quantity: 1 });
       }
+      state.totalPrice = total(state.items);
     },
     removeItem: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter(item => item.id !== action.payload);
+      state.totalPrice = total(state.items);
     },
     increaseQty: (state, action: PayloadAction<number>) => {
-      console.log('====================================');
-      console.log('action', action);
-      console.log('====================================');
       const existing = state.items.find(item => item.id === action.payload);
       if (existing) {
         existing.quantity += 1;
       }
+      state.totalPrice = total(state.items);
     },
     decreaseQty: (state, action: PayloadAction<number>) => {
       const existing = state.items.find(item => item.id === action.payload);
@@ -54,6 +57,7 @@ export const CartSlice = createSlice({
           text2: 'Product Removed From Cart👋',
         });
       }
+      state.totalPrice = total(state.items);
     },
   },
 });

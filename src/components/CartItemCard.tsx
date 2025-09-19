@@ -46,7 +46,10 @@ const CartItemCard = ({ item }) => {
               <Text style={styles.sizeText}>M</Text>
             </View>
             <Text style={styles.dollar}>
-              $ <Text style={styles.price}>{item?.price}</Text>
+              $
+              <Text style={styles.price} numberOfLines={1} ellipsizeMode="tail">
+                {item?.price * item?.quantity}
+              </Text>
             </Text>
           </View>
           <View style={styles.thirdRow}>
@@ -133,6 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   dollar: {
+    width:80,
     color: '#D17842',
     fontWeight: '500',
     fontSize: 16,
